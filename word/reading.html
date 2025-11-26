@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оқылым дағдыларын дамыту - Тақырыптарды таңдау</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .instructions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .instructions h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .exercise-wrapper {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .headings-container {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        
+        .headings-container h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            padding-top: 10px;
+            margin-top: -10px;
+        }
+        
+        .headings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .heading-option {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            cursor: move;
+            transition: all 0.2s;
+        }
+        
+        .heading-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .heading-option.dragging {
+            opacity: 0.5;
+        }
+        
+        .heading-option.used {
+            opacity: 0.5;
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        
+        .paragraphs-container {
+            flex: 2;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .paragraphs-container h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .paragraph-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .paragraph-item:hover {
+            border-color: var(--primary);
+        }
+        
+        .paragraph-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            min-height: 50px;
+        }
+        
+        .drop-zone {
+            min-height: 50px;
+            padding: 10px 15px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-style: italic;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        
+        .drop-zone.active {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .drop-zone.correct {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        
+        .drop-zone.incorrect {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .paragraph-text {
+            line-height: 1.8;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .result {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+        
+        .result.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+        
+        .score-board {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .exercise-wrapper {
+                flex-direction: column;
+            }
+            
+            .headings-container {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Оқылым Дағдыларын Дамыту</h1>
+            <p class="subtitle">Мәтін бөлімдеріне сәйкес келетін тақырыптарды таңдау</p>
+        </header>
+        
+        <div class="score-board">
+            <h2>Сіздің нәтижеңіз</h2>
+            <div class="score" id="scoreDisplay">0/4</div>
+            <p>Төмендегі әрбір мәтін бөліміне сәйкес келетін тақырыпты таңдаңыз</p>
+        </div>
+        
+        <section class="instructions">
+            <h2>Нұсқаулар</h2>
+            <p>Оң жақтағы тақырыптарды сол жақтағы сәйкес мәтін бөліміне сүйреп апарыңыз. Әрбір мәтін бөлімі үшін дұрыс тақырыпты таңдау керек.</p>
+            <p><strong>Ескерту:</strong> Оң жақтағы тақырыптар бетті айналдырған кезде де экранда тұрақты болып қалады және әр рет кіргенде тақырыптардың реті кездейсоқ өзгереді.</p>
+        </section>
+        
+        <div class="exercise-wrapper">
+            <div class="paragraphs-container">
+                <h2>Мәтін бөлімдері</h2>
+                
+                <div class="paragraph-item" data-correct="Where to stay">
+                    <div class="paragraph-header">
+                        <div class="drop-zone" id="dropZone1">Тақырыпты осы жерге апарыңыз</div>
+                    </div>
+                    <div class="paragraph-text">
+                        The Khao San Road was a famous traveller spot even before Leonardo di Caprio's character in the film The Beach stayed there. But it's noisy, not very pretty and not very Thai. For something more authentic, Phra Kanong offers an alternative place to stay, with its fantastic street markets where everyday Bangkok people eat, work and live. It's not as convenient for the main tourist sites, but it has a Skytrain station so you can be at the Grand Palace in 20 minutes.
+                    </div>
+                </div>
+                
+                <div class="paragraph-item" data-correct="How to get around">
+                    <div class="paragraph-header">
+                        <div class="drop-zone" id="dropZone2">Тақырыпты осы жерге апарыңыз</div>
+                    </div>
+                    <div class="paragraph-text">
+                        Bangkok's traffic can be a nightmare. Sure, you can easily take a taxi – if you want to spend hours stuck in traffic jams – but there are two much better ways to get around the city. To explore the temples and historical sites, catch an express boat river taxi or a longtail boat along the Chao Phraya river and the canals. For the modern part of the city, the Skytrain is a fast, cheap way to travel from the river to the shopping malls and nightlife of Sukhumvit, and the famous Chatuchak street market.
+                    </div>
+                </div>
+                
+                <div class="paragraph-item" data-correct="Where to eat">
+                    <div class="paragraph-header">
+                        <div class="drop-zone" id="dropZone3">Тақырыпты осы жерге апарыңыз</div>
+                    </div>
+                    <div class="paragraph-text">
+                        The simple answer is: everywhere! Thai street food is among the best in the world, and for around $5 you can eat a filling and delicious meal. Some food stands have little plastic seats where you can sit and eat and they cook the same dish over and over, like fried chicken on rice or Pad Thai noodles. Head for Chinatown – Yaowarat Street – and choose whatever looks most interesting from the many excellent Chinese and Thai restaurants and food stands.
+                    </div>
+                </div>
+                
+                <div class="paragraph-item" data-correct="What to do">
+                    <div class="paragraph-header">
+                        <div class="drop-zone" id="dropZone4">Тақырыпты осы жерге апарыңыз</div>
+                    </div>
+                    <div class="paragraph-text">
+                        After you've seen the main sites like the Giant Buddha at the temple of Wat Pho and the spectacular Grand Palace, and shopped at Chatuchak market, check out the snake farm and watch the live snake show. You can even touch a snake yourself if you want to!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="headings-container">
+                <h2>Тақырыптар</h2>
+                <div class="headings-list" id="headingsList">
+                    <!-- Тақырыптар динамикалық түрде жасалады -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="resetBtn">Қалпына келтіру</button>
+            <button class="btn btn-success" id="checkBtn">Жауаптарды тексеру</button>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Айнымалылар
+        let currentScore = 0;
+        const maxScore = 4;
+        let draggedItem = null;
+        
+        // Тақырыптар тізімі
+        const headingOptions = [
+            { value: "Where to stay", text: "Where to stay" },
+            { value: "How to get around", text: "How to get around" },
+            { value: "Where to eat", text: "Where to eat" },
+            { value: "What to do", text: "What to do" },
+            { value: "where to fly", text: "where to fly" },
+            { value: "where to buy", text: "where to buy" },
+            { value: "how to check", text: "how to check" }
+        ];
+        
+        // Элементтерді алу
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const resetBtn = document.getElementById('resetBtn');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultDiv = document.getElementById('result');
+        const headingsList = document.getElementById('headingsList');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        
+        // Таңдауларды басқару
+        const selectedHeadings = {
+            dropZone1: null,
+            dropZone2: null,
+            dropZone3: null,
+            dropZone4: null
+        };
+        
+        // Тақырыптарды араластыру функциясы
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // Тақырыптарды көрсету функциясы
+        function renderHeadings() {
+            // Тақырыптарды араластыру
+            const shuffledHeadings = shuffleArray([...headingOptions]);
+            
+            // Барлық тақырыптарды жою
+            headingsList.innerHTML = '';
+            
+            // Әр тақырыпты қосу
+            shuffledHeadings.forEach(heading => {
+                const headingElement = document.createElement('div');
+                headingElement.className = 'heading-option';
+                headingElement.setAttribute('draggable', 'true');
+                headingElement.setAttribute('data-value', heading.value);
+                headingElement.textContent = heading.text;
+                headingsList.appendChild(headingElement);
+            });
+            
+            // Жаңа тақырыптарға оқиға тыңдаушыларын қосу
+            attachHeadingEventListeners();
+        }
+        
+        // Тақырыптарға оқиға тыңдаушыларын қосу функциясы
+        function attachHeadingEventListeners() {
+            const headingOptions = document.querySelectorAll('.heading-option');
+            
+            headingOptions.forEach(option => {
+                option.addEventListener('dragstart', function(e) {
+                    if (this.classList.contains('used')) {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    draggedItem = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.getAttribute('data-value'));
+                });
+                
+                option.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedItem = null;
+                });
+            });
+        }
+        
+        // Drop zone оқиға тыңдаушылары
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            zone.addEventListener('dragleave', function() {
+                this.classList.remove('active');
+            });
+            
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                
+                if (draggedItem && !draggedItem.classList.contains('used')) {
+                    const headingValue = draggedItem.getAttribute('data-value');
+                    const headingText = draggedItem.textContent;
+                    
+                    // Егер бұрыннан тақырып таңдалған болса, оны қайтару
+                    if (selectedHeadings[this.id]) {
+                        returnHeadingToPool(selectedHeadings[this.id]);
+                    }
+                    
+                    // Жаңа тақырыпты қосу
+                    selectedHeadings[this.id] = {
+                        value: headingValue,
+                        text: headingText,
+                        element: draggedItem
+                    };
+                    
+                    // Drop zone-ды жаңарту
+                    this.textContent = headingText;
+                    this.classList.add('has-heading');
+                    
+                    // Тақырыпты тізімнен "пайдаланылған" ретінде белгілеу
+                    draggedItem.classList.add('used');
+                    draggedItem.style.opacity = '0.5';
+                    draggedItem.style.cursor = 'not-allowed';
+                }
+            });
+        });
+        
+        // Тақырыпты тізімге қайтару функциясы
+        function returnHeadingToPool(heading) {
+            if (heading && heading.element) {
+                heading.element.classList.remove('used');
+                heading.element.style.opacity = '1';
+                heading.element.style.cursor = 'move';
+            }
+        }
+        
+        // Барлық таңдалған тақырыптарды қайтару
+        function resetAllSelections() {
+            Object.keys(selectedHeadings).forEach(zoneId => {
+                if (selectedHeadings[zoneId]) {
+                    returnHeadingToPool(selectedHeadings[zoneId]);
+                    selectedHeadings[zoneId] = null;
+                }
+                
+                const dropZone = document.getElementById(zoneId);
+                dropZone.textContent = 'Тақырыпты осы жерге апарыңыз';
+                dropZone.classList.remove('has-heading', 'correct', 'incorrect');
+            });
+            
+            currentScore = 0;
+            scoreDisplay.textContent = '0/4';
+            resultDiv.style.display = 'none';
+            
+            // Тақырыптарды қайта араластыру
+            renderHeadings();
+        }
+        
+        // Жауаптарды тексеру
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            dropZones.forEach(zone => {
+                const paragraphItem = zone.closest('.paragraph-item');
+                const correctHeading = paragraphItem.getAttribute('data-correct');
+                const selectedHeading = selectedHeadings[zone.id];
+                
+                if (selectedHeading && selectedHeading.value === correctHeading) {
+                    zone.classList.add('correct');
+                    zone.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    zone.classList.add('incorrect');
+                    zone.classList.remove('correct');
+                }
+            });
+            
+            currentScore = correctCount;
+            scoreDisplay.textContent = `${currentScore}/${maxScore}`;
+            
+            // Нәтижені көрсету
+            if (correctCount === maxScore) {
+                resultDiv.textContent = 'Керемет! Сіз барлық тақырыптарды дұрыс таңдадыңыз!';
+                resultDiv.className = 'result success';
+            } else {
+                resultDiv.textContent = `Сіз ${correctCount} тақырыпты дұрыс таңдадыңыз. Қалғандарын қайта тексеріңіз.`;
+                resultDiv.className = 'result error';
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Байланыстарды орнату
+        resetBtn.addEventListener('click', resetAllSelections);
+        checkBtn.addEventListener('click', checkAnswers);
+        
+        // Бастапқы инициализация
+        renderHeadings();
+        resetAllSelections();
+    </script>
+</body>
+</html>

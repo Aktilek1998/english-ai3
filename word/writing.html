@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мәтіндегі бос орындарды толтыру - Эссе жазбалары</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .instructions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .instructions h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .text-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            line-height: 1.8;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 180px;
+            margin: 0 5px;
+            padding: 5px 10px;
+            border-bottom: 2px dashed #ccc;
+            text-align: center;
+            position: relative;
+        }
+        
+        .blank input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+            padding: 5px;
+        }
+        
+        .blank.correct {
+            border-bottom-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        
+        .blank.incorrect {
+            border-bottom-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .paragraph {
+            margin-bottom: 25px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .result {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+        
+        .result.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+        
+        .score-board {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .blank {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Мәтіндегі бос орындарды толтыру</h1>
+            <p class="subtitle">Эссе жазбалары - Сөздік қорды дамыту</p>
+        </header>
+        
+        <div class="score-board">
+            <h2>Сіздің нәтижеңіз</h2>
+            <div class="score" id="scoreDisplay">0/7</div>
+            <p>Төмендегі мәтіндегі барлық бос орындарды толтырыңыз</p>
+        </div>
+        
+        <section class="instructions">
+            <h2>Нұсқаулар</h2>
+            <p>Төмендегі мәтінде бос орындар бар. Оларды сәйкес келетін сөздермен толтырыңыз. Әр бос орын үшін бірнеше дұрыс жауап бар, сіз олардың кез келген біреуін жаза аласыз.</p>
+            <p><strong>Ескерту:</strong> Барлық жауаптар ағылшын тілінде болуы керек.</p>
+        </section>
+        
+        <section class="text-container">
+            <h2>For and against essay: 'People spend too much time and money on fashion'</h2>
+            
+            <div class="paragraph">
+                <p>Every season, the great fashion houses of Europe and America present their new collections in the hope of persuading people to renew their wardrobes by purchasing the latest designs. <span class="blank" id="blank1"><input type="text"></span>, one does not have to be a slave to fashion to look smart.</p>
+            </div>
+            
+            <div class="paragraph">
+                <p><span class="blank" id="blank2"><input type="text"></span>, following the latest trends in fashion can be extremely expensive. This is especially true for those who buy costly designer clothing. There is also the risk of getting into debt in order to keep up with the latest fashions.</p>
+            </div>
+            
+            <div class="paragraph">
+                <p><span class="blank" id="blank3"><input type="text"></span>, followers of fashion often give up their individuality for the sake of fashion. They choose clothes which suit neither their figures nor their personalities. <span class="blank" id="blank4"><input type="text"></span>, as the way we dress should reflect who we really are.</p>
+            </div>
+            
+            <div class="paragraph">
+                <p><span class="blank" id="blank5"><input type="text"></span>, some people argue that it is necessary to dress fashionably in order to create the correct image for their careers. This is particularly true of those who work with the public, as they reflect the image of their company. This does not mean that the latest fashions are the most appropriate, however. Simple but well-made clothes are almost always the best choice for business wear.</p>
+            </div>
+            
+            <div class="paragraph">
+                <p><span class="blank" id="blank6"><input type="text"></span>, I strongly believe that it is advisable to dress with style by choosing good quality clothes which suit you as an individual and have lasting elegance. As the famous designer Coco Chanel put it, 'Fashion is made to become unfashionable.' So <span class="blank" id="blank7"><input type="text"></span> changing your wardrobe constantly, isn't it better to build up a collection of clothes which you can always wear?</p>
+            </div>
+        </section>
+        
+        <div class="controls">
+            <button class="btn" id="resetBtn">Қалпына келтіру</button>
+            <button class="btn btn-success" id="checkBtn">Жауаптарды тексеру</button>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Айнымалылар
+        let currentScore = 0;
+        const maxScore = 7;
+        
+        // Дұрыс жауаптар
+        const correctAnswers = {
+            blank1: ["in my opinion", "to my mind", "in my view"],
+            blank2: ["to start with", "firstly", "first of all", "in the first place"],
+            blank3: ["in addition to this", "what is more", "also", "furthermore"],
+            blank4: ["this is unfortunate", "this is unlucky", "unfortunately", "sadly"],
+            blank5: ["on the other hand", "however", "in spite of", "despite", "even though"],
+            blank6: ["to conclude", "to sum up", "all in all", "in conclusion", "on the whole"],
+            blank7: ["instead of", "in its place", "as a alternative", "rather"]
+        };
+        
+        // Элементтерді алу
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const resetBtn = document.getElementById('resetBtn');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultDiv = document.getElementById('result');
+        const blanks = document.querySelectorAll('.blank');
+        
+        // Жауаптарды тексеру
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            blanks.forEach(blank => {
+                const input = blank.querySelector('input');
+                const blankId = blank.id;
+                const userAnswer = input.value.trim().toLowerCase();
+                
+                if (correctAnswers[blankId] && correctAnswers[blankId].includes(userAnswer)) {
+                    blank.classList.add('correct');
+                    blank.classList.remove('incorrect');
+                    correctCount++;
+                } else if (userAnswer === '') {
+                    blank.classList.remove('correct', 'incorrect');
+                } else {
+                    blank.classList.add('incorrect');
+                    blank.classList.remove('correct');
+                }
+            });
+            
+            currentScore = correctCount;
+            scoreDisplay.textContent = `${currentScore}/${maxScore}`;
+            
+            // Нәтижені көрсету
+            if (correctCount === maxScore) {
+                resultDiv.textContent = 'Керемет! Сіз барлық бос орындарды дұрыс толтырдыңыз!';
+                resultDiv.className = 'result success';
+            } else {
+                resultDiv.textContent = `Сіз ${correctCount} бос орынды дұрыс толтырдыңыз. Қалғандарын қайта тексеріңіз.`;
+                resultDiv.className = 'result error';
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Барлық жауаптарды тазарту
+        function resetAll() {
+            blanks.forEach(blank => {
+                const input = blank.querySelector('input');
+                input.value = '';
+                blank.classList.remove('correct', 'incorrect');
+            });
+            
+            currentScore = 0;
+            scoreDisplay.textContent = '0/7';
+            resultDiv.style.display = 'none';
+        }
+        
+        // Байланыстарды орнату
+        resetBtn.addEventListener('click', resetAll);
+        checkBtn.addEventListener('click', checkAnswers);
+        
+        // Enter пернесімен тексеру
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswers();
+            }
+        });
+        
+        // Бастапқы инициализация
+        resetAll();
+    </script>
+</body>
+</html>

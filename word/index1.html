@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ағылшын тілін үйрену порталы</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .menu-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .menu-card.listening {
+            border-top: 5px solid var(--accent);
+        }
+        
+        .menu-card.reading {
+            border-top: 5px solid var(--success);
+        }
+        
+        .menu-card.writing {
+            border-top: 5px solid var(--warning);
+        }
+        
+        .menu-card.speaking {
+            border-top: 5px solid var(--danger);
+        }
+        
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .card-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>English learning portal</h1>
+            <p class="subtitle">A comprehensive platform to develop your language skills</p>
+        </header>
+        
+        <div class="dashboard">
+            <div class="menu-card listening" onclick="location.href='listening.html'">
+                <div class="card-icon">🎧</div>
+                <h2 class="card-title">Listening</h2>
+                <p class="card-description">Listen to audio materials in English at different levels and improve your listening skills.</p>
+            </div>
+            
+            <div class="menu-card reading" onclick="location.href='reading.html'">
+                <div class="card-icon">📖</div>
+                <h2 class="card-title">Reading</h2>
+                <p class="card-description">Read texts on a variety of topics, expand your vocabulary, and develop your comprehension skills.</p>
+            </div>
+            
+            <div class="menu-card writing" onclick="location.href='writing.html'">
+                <div class="card-icon">✏️</div>
+                <h2 class="card-title">Writing</h2>
+                <p class="card-description">Improve your grammar and style by writing texts in various genres.</p>
+            </div>
+            
+            <div class="menu-card speaking" onclick="location.href='speaking.html'">
+                <div class="card-icon">🎤</div>
+                <h2 class="card-title">Speaking</h2>
+                <p class="card-description">Prepare to speak English fluently by practicing your speaking skills.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Ybraiym Kymbat English learning portal.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Карточкаларға анимация қосу
+        document.querySelectorAll('.menu-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

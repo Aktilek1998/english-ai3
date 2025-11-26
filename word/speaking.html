@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ағылшынша сөздік - 1000 жиі қолданылатын сөздер</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .search-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .search-btn {
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .dictionary-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .word-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .word-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .word {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .phonetic {
+            font-size: 1rem;
+            color: var(--gray);
+            font-style: italic;
+            margin-left: 10px;
+        }
+        
+        .speak-btn {
+            padding: 8px 15px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .speak-btn:hover {
+            background-color: #3aa8d8;
+        }
+        
+        .record-btn {
+            padding: 8px 15px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        
+        .record-btn:hover {
+            background-color: #ff5252;
+        }
+        
+        .record-btn.recording {
+            background-color: #ff0000;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .meaning {
+            margin-bottom: 10px;
+        }
+        
+        .example {
+            font-style: italic;
+            color: var(--gray);
+            border-left: 3px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .category-tab {
+            padding: 8px 15px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .word-count {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .alphabet-letter {
+            padding: 5px 10px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .alphabet-letter:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .audio-player {
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .word-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .speak-btn, .record-btn {
+                margin-top: 10px;
+            }
+            
+            .alphabet-nav {
+                gap: 3px;
+            }
+            
+            .alphabet-letter {
+                padding: 3px 6px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ағылшынша Сөздік</h1>
+            <p class="subtitle">1000 жиі қолданылатын сөздер - Транскрипциямен және дыбыстаумен</p>
+        </header>
+        
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Сөзді іздеу...">
+                <button class="search-btn" id="searchBtn">Іздеу</button>
+            </div>
+            
+            <div class="alphabet-nav" id="alphabetNav">
+                <!-- Алфавит әріптері осы жерде көрсетіледі -->
+            </div>
+            
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="all">Барлығы</button>
+                <button class="category-tab" data-category="common">Жиі қолданылатын</button>
+                <button class="category-tab" data-category="verbs">Етістіктер</button>
+                <button class="category-tab" data-category="nouns">Зат есімдер</button>
+                <button class="category-tab" data-category="adjectives">Сын есімдер</button>
+            </div>
+        </section>
+        
+        <section class="dictionary-container" id="dictionaryContainer">
+            <!-- Сөздер осы жерде көрсетіледі -->
+        </section>
+        
+        
+    </div>
+
+    <script>
+        // 1000 сөздің толық тізімі
+        const fullDictionary = [
+            {
+                word: "the",
+                phonetic: "/ðə/",
+                meaning: "белгілі бір нәрсені көрсету үшін қолданылады",
+                example: "The sun is shining.",
+                translation: "Күн жарық шашып тұр.",
+                category: "common"
+            },
+            {
+                word: "be",
+                phonetic: "/biː/",
+                meaning: "болу, тұру",
+                example: "I want to be a doctor.",
+                translation: "Мен дәрігер болғым келеді.",
+                category: "verbs"
+            },
+            {
+                word: "to",
+                phonetic: "/tuː/",
+                meaning: "-ға, -ге, -қа, -ке жалғаулығы",
+                example: "I went to the store.",
+                translation: "Мен дүкенге бардым.",
+                category: "common"
+            },
+            {
+                word: "of",
+                phonetic: "/əv/",
+                meaning: "-ның, -нің жалғаулығы",
+                example: "The color of the sky is blue.",
+                translation: "Аспан түсі көк.",
+                category: "common"
+            },
+            {
+                word: "and",
+                phonetic: "/ænd/",
+                meaning: "және, пен",
+                example: "I like apples and oranges.",
+                translation: "Маған алма мен апельсин ұнайды.",
+                category: "common"
+            },
+            {
+                word: "a",
+                phonetic: "/ə/",
+                meaning: "бір, кез келген",
+                example: "I saw a cat.",
+                translation: "Мен бір мысық көрдім.",
+                category: "common"
+            },
+            {
+                word: "in",
+                phonetic: "/ɪn/",
+                meaning: "ішінде, -да, -де",
+                example: "The book is in the bag.",
+                translation: "Кітап сөмкеде.",
+                category: "common"
+            },
+            {
+                word: "he",
+                phonetic: "/hiː/",
+                meaning: "ол (ер адам)",
+                example: "He is my brother.",
+                translation: "Ол менің ағам.",
+                category: "common"
+            },
+            {
+                word: "have",
+                phonetic: "/hæv/",
+                meaning: "ие болу, бар",
+                example: "I have a car.",
+                translation: "Менің машинам бар.",
+                category: "verbs"
+            },
+            {
+                word: "it",
+                phonetic: "/ɪt/",
+                meaning: "ол (зат, жануар)",
+                example: "It is raining.",
+                translation: "Жаңбыр жауып тұр.",
+                category: "common"
+            },
+            {
+                word: "that",
+                phonetic: "/ðæt/",
+                meaning: "бұл, сол",
+                example: "That is my house.",
+                translation: "Бұл менің үйім.",
+                category: "common"
+            },
+            {
+                word: "for",
+                phonetic: "/fɔːr/",
+                meaning: "үшін, -ға, -ге",
+                example: "This gift is for you.",
+                translation: "Бұл сыйлық сіз үшін.",
+                category: "common"
+            },
+            {
+                word: "they",
+                phonetic: "/ðeɪ/",
+                meaning: "олар",
+                example: "They are my friends.",
+                translation: "Олар менің досдарым.",
+                category: "common"
+            },
+            {
+                word: "with",
+                phonetic: "/wɪð/",
+                meaning: "бірге, -мен, -пен",
+                example: "I went with my sister.",
+                translation: "Мен қарындасыммен бардым.",
+                category: "common"
+            },
+            {
+                word: "as",
+                phonetic: "/æz/",
+                meaning: "сияқты, ретінде",
+                example: "She works as a teacher.",
+                translation: "Ол мұғалім ретінде жұмыс істейді.",
+                category: "common"
+            },
+            {
+                word: "not",
+                phonetic: "/nɒt/",
+                meaning: "емес, жоқ",
+                example: "I am not tired.",
+                translation: "Мен шаршаған жоқпын.",
+                category: "common"
+            },
+            {
+                word: "on",
+                phonetic: "/ɒn/",
+                meaning: "үстінде, -да, -де",
+                example: "The book is on the table.",
+                translation: "Кітап үстелдің үстінде.",
+                category: "common"
+            },
+            {
+                word: "she",
+                phonetic: "/ʃiː/",
+                meaning: "ол (әйел адам)",
+                example: "She is my mother.",
+                translation: "Ол менің анам.",
+                category: "common"
+            },
+            {
+                word: "at",
+                phonetic: "/æt/",
+                meaning: "-да, -де, -та, -те",
+                example: "I am at home.",
+                translation: "Мен үйдемін.",
+                category: "common"
+            },
+            {
+                word: "by",
+                phonetic: "/baɪ/",
+                meaning: "арқылы, бойынша",
+                example: "I go to work by bus.",
+                translation: "Мен жұмысқа автобуспен барамын.",
+                category: "common"
+            },
+            {
+                word: "this",
+                phonetic: "/ðɪs/",
+                meaning: "бұл",
+                example: "This is my car.",
+                translation: "Бұл менің машинам.",
+                category: "common"
+            },
+            {
+                word: "we",
+                phonetic: "/wiː/",
+                meaning: "біз",
+                example: "We are students.",
+                translation: "Біз студентпіз.",
+                category: "common"
+            },
+            {
+                word: "you",
+                phonetic: "/juː/",
+                meaning: "сен, сіз",
+                example: "You are my friend.",
+                translation: "Сен менің досымынсың.",
+                category: "common"
+            },
+            {
+                word: "do",
+                phonetic: "/duː/",
+                meaning: "істеу, жасау",
+                example: "What do you do?",
+                translation: "Сіз не істесез?",
+                category: "verbs"
+            },
+            {
+                word: "but",
+                phonetic: "/bʌt/",
+                meaning: "бірақ, алайда",
+                example: "I like coffee, but I don't like tea.",
+                translation: "Маған кофе ұнайды, бірақ шай ұнамайды.",
+                category: "common"
+            },
+            {
+                word: "from",
+                phonetic: "/frɒm/",
+                meaning: "-дан, -ден, -тан, -тен",
+                example: "I am from Kazakhstan.",
+                translation: "Мен Қазақстаннанмын.",
+                category: "common"
+            },
+            {
+                word: "or",
+                phonetic: "/ɔːr/",
+                meaning: "немесе, не",
+                example: "Do you want tea or coffee?",
+                translation: "Сіз шай не кофе алғыңыз келе ме?",
+                category: "common"
+            },
+            {
+                word: "which",
+                phonetic: "/wɪtʃ/",
+                meaning: "қайсы, қандай",
+                example: "Which book do you want?",
+                translation: "Сіз қай кітапты алғыңыз келеді?",
+                category: "common"
+            },
+            {
+                word: "one",
+                phonetic: "/wʌn/",
+                meaning: "бір",
+                example: "I have one brother.",
+                translation: "Менің бір ағам бар.",
+                category: "common"
+            },
+            {
+                word: "would",
+                phonetic: "/wʊd/",
+                meaning: "-ар еді, -ер еді",
+                example: "I would like some water.",
+                translation: "Маған біраз су керек еді.",
+                category: "verbs"
+            },
+            {
+                word: "all",
+                phonetic: "/ɔːl/",
+                meaning: "барлық, бүкіл",
+                example: "All students are here.",
+                translation: "Барлық студенттер осында.",
+                category: "common"
+            },
+            {
+                word: "will",
+                phonetic: "/wɪl/",
+                meaning: "-ады, -еді (болашақ уақыт)",
+                example: "I will call you tomorrow.",
+                translation: "Мен сізге ертең телефонымен хабарласамын.",
+                category: "verbs"
+            },
+            {
+                word: "there",
+                phonetic: "/ðeər/",
+                meaning: "онда, сонда",
+                example: "There is a park near my house.",
+                translation: "Менің үйімнің жанында саябақ бар.",
+                category: "common"
+            },
+            {
+                word: "say",
+                phonetic: "/seɪ/",
+                meaning: "деу, айту",
+                example: "What did you say?",
+                translation: "Сіз не дедіңіз?",
+                category: "verbs"
+            },
+            {
+                word: "who",
+                phonetic: "/huː/",
+                meaning: "кім",
+                example: "Who is that?",
+                translation: "Бұл кім?",
+                category: "common"
+            },
+            {
+                word: "make",
+                phonetic: "/meɪk/",
+                meaning: "жасау, істеу",
+                example: "I will make dinner.",
+                translation: "Мен кешкі ас жасаймын.",
+                category: "verbs"
+            },
+            {
+                word: "when",
+                phonetic: "/wen/",
+                meaning: "қашан",
+                example: "When will you come?",
+                translation: "Сіз қашан келесіз?",
+                category: "common"
+            },
+            {
+                word: "can",
+                phonetic: "/kæn/",
+                meaning: "ала алу, білу",
+                example: "I can speak English.",
+                translation: "Мен ағылшынша сөйлей аламын.",
+                category: "verbs"
+            },
+            {
+                word: "more",
+                phonetic: "/mɔːr/",
+                meaning: "көбірек, тағы",
+                example: "I want more water.",
+                translation: "Маған тағы су керек.",
+                category: "common"
+            },
+            {
+                word: "if",
+                phonetic: "/ɪf/",
+                meaning: "егер",
+                example: "If it rains, we will stay home.",
+                translation: "Егер жаңбыр жауса, біз үйде қаламыз.",
+                category: "common"
+            },
+            {
+                word: "no",
+                phonetic: "/nəʊ/",
+                meaning: "жоқ",
+                example: "No, I don't want coffee.",
+                translation: "Жоқ, маған кофе қажет емес.",
+                category: "common"
+            },
+            {
+                word: "man",
+                phonetic: "/mæn/",
+                meaning: "ер адам, адам",
+                example: "That man is my father.",
+                translation: "Ол адам менің әкем.",
+                category: "nouns"
+            },
+            {
+                word: "out",
+                phonetic: "/aʊt/",
+                meaning: "сыртта, тыс",
+                example: "Let's go out.",
+                translation: "Кетейік сыртқа.",
+                category: "common"
+            },
+            {
+                word: "other",
+                phonetic: "/ˈʌðər/",
+                meaning: "басқа",
+                example: "Do you have other books?",
+                translation: "Сізде басқа кітаптар бар ма?",
+                category: "common"
+            },
+            {
+                word: "so",
+                phonetic: "/səʊ/",
+                meaning: "сондықтан, сонша",
+                example: "I was tired, so I went to bed.",
+                translation: "Мен шаршаған едім, сондықтан ұйықтағым келді.",
+                category: "common"
+            },
+            {
+                word: "what",
+                phonetic: "/wɒt/",
+                meaning: "не",
+                example: "What is your name?",
+                translation: "Сіздің атыңыз кім?",
+                category: "common"
+            },
+            {
+                word: "time",
+                phonetic: "/taɪm/",
+                meaning: "уақыт, рет",
+                example: "What time is it?",
+                translation: "Сағат неше?",
+                category: "nouns"
+            },
+            {
+                word: "up",
+                phonetic: "/ʌp/",
+                meaning: "жоғары, үсті",
+                example: "Stand up, please.",
+                translation: "Тұрыңызшы, өтінем.",
+                category: "common"
+            },
+            {
+                word: "go",
+                phonetic: "/ɡəʊ/",
+                meaning: "бару, кету",
+                example: "I go to school every day.",
+                translation: "Мен күнде мектепке барамын.",
+                category: "verbs"
+            },
+            {
+                word: "about",
+                phonetic: "/əˈbaʊt/",
+                meaning: "туралы, шамамен",
+                example: "This book is about animals.",
+                translation: "Бұл кітап жануарлар туралы.",
+                category: "common"
+            },
+            {
+                word: "than",
+                phonetic: "/ðæn/",
+                meaning: "гөрі, қарағанда",
+                example: "She is taller than me.",
+                translation: "Ол менен ұзын.",
+                category: "common"
+            },
+            {
+                word: "into",
+                phonetic: "/ˈɪntuː/",
+                meaning: "ішіне",
+                example: "Put the book into the bag.",
+                translation: "Кітапты сөмкеге салыңыз.",
+                category: "common"
+            },
+            {
+                word: "could",
+                phonetic: "/kʊd/",
+                meaning: "ала алар еді",
+                example: "I could help you.",
+                translation: "Мен сізге көмектесе алар едім.",
+                category: "verbs"
+            },
+            {
+                word: "state",
+                phonetic: "/steɪt/",
+                meaning: "мемлекет, жағдай",
+                example: "Kazakhstan is a large state.",
+                translation: "Қазақстан үлкен мемлекет.",
+                category: "nouns"
+            },
+            {
+                word: "only",
+                phonetic: "/ˈəʊnli/",
+                meaning: "тек, ғана",
+                example: "I have only one pen.",
+                translation: "Менде тек бір қалам бар.",
+                category: "common"
+            },
+            {
+                word: "new",
+                phonetic: "/njuː/",
+                meaning: "жаңа",
+                example: "I bought a new car.",
+                translation: "Мен жаңа машина сатып алдым.",
+                category: "adjectives"
+            },
+            {
+                word: "year",
+                phonetic: "/jɪər/",
+                meaning: "жыл",
+                example: "I am 25 years old.",
+                translation: "Мен 25 жастамын.",
+                category: "nouns"
+            },
+            {
+                word: "some",
+                phonetic: "/sʌm/",
+                meaning: "біраз, кейбір",
+                example: "I need some help.",
+                translation: "Маған біраз көмек керек.",
+                category: "common"
+            },
+            {
+                word: "take",
+                phonetic: "/teɪk/",
+                meaning: "алу, апару",
+                example: "Take this book.",
+                translation: "Бұл кітапты алыңыз.",
+                category: "verbs"
+            },
+            {
+                word: "come",
+                phonetic: "/kʌm/",
+                meaning: "келу",
+                example: "Come here, please.",
+                translation: "Мына жерге келіңізші, өтінем.",
+                category: "verbs"
+            },
+            {
+                word: "people",
+                phonetic: "/ˈpiːpl/",
+                meaning: "адамдар, халық",
+                example: "Many people live in cities.",
+                translation: "Көптеген адамдар қалаларда тұрады.",
+                category: "nouns"
+            },
+            {
+                word: "know",
+                phonetic: "/nəʊ/",
+                meaning: "білу, тану",
+                example: "I know him.",
+                translation: "Мен оны танимын.",
+                category: "verbs"
+            },
+            {
+                word: "see",
+                phonetic: "/siː/",
+                meaning: "көру",
+                example: "I see a bird.",
+                translation: "Мен бір құс көріп тұрмын.",
+                category: "verbs"
+            },
+            {
+                word: "use",
+                phonetic: "/juːz/",
+                meaning: "пайдалану, қолдану",
+                example: "I use a computer for work.",
+                translation: "Мен жұмыс үшін компьютер қолданамын.",
+                category: "verbs"
+            },
+            {
+                word: "get",
+                phonetic: "/ɡet/",
+                meaning: "алу, жету",
+                example: "I need to get some milk.",
+                translation: "Маған біраз сүт алу керек.",
+                category: "verbs"
+            },
+            {
+                word: "like",
+                phonetic: "/laɪk/",
+                meaning: "ұнату, сияқты",
+                example: "I like chocolate.",
+                translation: "Маған шоколад ұнайды.",
+                category: "verbs"
+            },
+            {
+                word: "then",
+                phonetic: "/ðen/",
+                meaning: "содан кейін, онда",
+                example: "We ate, then we went home.",
+                translation: "Біз тамақтандық, содан кейін үйге бардық.",
+                category: "common"
+            },
+            {
+                word: "first",
+                phonetic: "/fɜːst/",
+                meaning: "бірінші",
+                example: "This is my first time here.",
+                translation: "Бұл менің мұндағы бірінші ретым.",
+                category: "adjectives"
+            },
+            {
+                word: "any",
+                phonetic: "/ˈeni/",
+                meaning: "кез келген, бірде-бір",
+                example: "Do you have any questions?",
+                translation: "Сізде сұрақтар бар ма?",
+                category: "common"
+            },
+            {
+                word: "work",
+                phonetic: "/wɜːk/",
+                meaning: "жұмыс, жұмыс істеу",
+                example: "I work in an office.",
+                translation: "Мен кеңседе жұмыс істеймін.",
+                category: "verbs"
+            },
+            {
+                word: "now",
+                phonetic: "/naʊ/",
+                meaning: "қазір, енді",
+                example: "I am busy now.",
+                translation: "Мен қазір бос емеспін.",
+                category: "common"
+            },
+            {
+                word: "may",
+                phonetic: "/meɪ/",
+                meaning: "мүмкін, болар",
+                example: "It may rain tomorrow.",
+                translation: "Ертең жаңбыр жауар мүмкін.",
+                category: "verbs"
+            },
+            {
+                word: "such",
+                phonetic: "/sʌtʃ/",
+                meaning: "мұндай, осындай",
+                example: "I've never seen such a beautiful place.",
+                translation: "Мен ешқашан осындай әдемі жер көрген емеспін.",
+                category: "common"
+            },
+            {
+                word: "give",
+                phonetic: "/ɡɪv/",
+                meaning: "беру",
+                example: "Please give me the book.",
+                translation: "Маған кітапты беріңізші, өтінем.",
+                category: "verbs"
+            },
+            {
+                word: "over",
+                phonetic: "/ˈəʊvər/",
+                meaning: "үстінде, асып",
+                example: "The plane flew over the city.",
+                translation: "Ұшақ қала үстінен ұшып өтті.",
+                category: "common"
+            },
+            {
+                word: "think",
+                phonetic: "/θɪŋk/",
+                meaning: "ойлау, ой ету",
+                example: "I think it's a good idea.",
+                translation: "Менің ойымша, бұл жақсы идея.",
+                category: "verbs"
+            },
+            {
+                word: "most",
+                phonetic: "/məʊst/",
+                meaning: "ең көп, көпшілік",
+                example: "Most people like music.",
+                translation: "Адамдардың көпшілігі музыканы жақсы көреді.",
+                category: "common"
+            },
+            {
+                word: "even",
+                phonetic: "/ˈiːvn/",
+                meaning: "тіпті, тіптен",
+                example: "He can't even swim.",
+                translation: "Ол тіптен жүзе алмайды.",
+                category: "common"
+            },
+            {
+                word: "find",
+                phonetic: "/faɪnd/",
+                meaning: "табу",
+                example: "I can't find my keys.",
+                translation: "Мен кілттерімді таба алмай жатырмын.",
+                category: "verbs"
+            },
+            {
+                word: "also",
+                phonetic: "/ˈɔːlsəʊ/",
+                meaning: "сондай-ақ, да, де",
+                example: "I also like football.",
+                translation: "Маған да футбол ұнайды.",
+                category: "common"
+            },
+            {
+                word: "after",
+                phonetic: "/ˈɑːftər/",
+                meaning: "кейін, соң",
+                example: "We'll go after lunch.",
+                translation: "Біз түскі астан кейін барамыз.",
+                category: "common"
+            },
+            {
+                word: "many",
+                phonetic: "/ˈmeni/",
+                meaning: "көп",
+                example: "How many books do you have?",
+                translation: "Сізде неше кітап бар?",
+                category: "common"
+            },
+            {
+                word: "must",
+                phonetic: "/mʌst/",
+                meaning: "керек, міндетті түрде",
+                example: "You must study hard.",
+                translation: "Сіз жақсы оқуыңыз керек.",
+                category: "verbs"
+            },
+            {
+                word: "look",
+                phonetic: "/lʊk/",
+                meaning: "қарау, көріну",
+                example: "Look at this picture.",
+                translation: "Мына суретке қараңыз.",
+                category: "verbs"
+            },
+            {
+                word: "before",
+                phonetic: "/bɪˈfɔːr/",
+                meaning: "бұрын, дейін",
+                example: "I saw him before the meeting.",
+                translation: "Мен оны кездесуге дейін көрдім.",
+                category: "common"
+            },
+            {
+                word: "great",
+                phonetic: "/ɡreɪt/",
+                meaning: "ұлы, үлкен, керемет",
+                example: "That's a great idea!",
+                translation: "Бұл керемет идея!",
+                category: "adjectives"
+            },
+            {
+                word: "back",
+                phonetic: "/bæk/",
+                meaning: "артқа, арқа",
+                example: "Please come back tomorrow.",
+                translation: "Ертең қайтып келіңізші, өтінем.",
+                category: "common"
+            },
+            {
+                word: "through",
+                phonetic: "/θruː/",
+                meaning: "арқылы, бойымен",
+                example: "We walked through the park.",
+                translation: "Біз саябақ арқылы жүрдік.",
+                category: "common"
+            },
+            {
+                word: "where",
+                phonetic: "/weər/",
+                meaning: "қайда, қай жерде",
+                example: "Where do you live?",
+                translation: "Сіз қайда тұрасыз?",
+                category: "common"
+            },
+            {
+                word: "much",
+                phonetic: "/mʌtʃ/",
+                meaning: "көп",
+                example: "How much does it cost?",
+                translation: "Бұл қанша тұрады?",
+                category: "common"
+            },
+            {
+                word: "good",
+                phonetic: "/ɡʊd/",
+                meaning: "жақсы",
+                example: "This is a good book.",
+                translation: "Бұл жақсы кітап.",
+                category: "adjectives"
+            },
+            {
+                word: "well",
+                phonetic: "/wel/",
+                meaning: "жақсы, сау",
+                example: "I feel well today.",
+                translation: "Мен бүгін жақсы сезінемін.",
+                category: "adjectives"
+            },
+            {
+                word: "should",
+                phonetic: "/ʃʊd/",
+                meaning: "керек, тиіс",
+                example: "You should see a doctor.",
+                translation: "Сіз дәрігерге баруыңыз керек.",
+                category: "verbs"
+            },
+            {
+                word: "because",
+                phonetic: "/bɪˈkɒz/",
+                meaning: "себебі, өйткені",
+                example: "I'm happy because I passed the exam.",
+                translation: "Мен бақыттымын, өйткені емтихандан өттім.",
+                category: "common"
+            },
+            {
+                word: "each",
+                phonetic: "/iːtʃ/",
+                meaning: "әр, әрбір",
+                example: "Each student has a book.",
+                translation: "Әрбір студентте кітап бар.",
+                category: "common"
+            },
+            {
+                word: "just",
+                phonetic: "/dʒʌst/",
+                meaning: "ғана, әділ",
+                example: "I just arrived.",
+                translation: "Мен жаңа ғана келдім.",
+                category: "common"
+            },
+            {
+                word: "I",
+                phonetic: "/aɪ/",
+                meaning: "мен",
+                example: "I am a student.",
+                translation: "Мен студентпін.",
+                category: "common"
+            },
+            {
+                word: "his",
+                phonetic: "/hɪz/",
+                meaning: "оның (ер адам үшін)",
+                example: "This is his book.",
+                translation: "Бұл оның кітабы.",
+                category: "common"
+            },
+            {
+                word: "was",
+                phonetic: "/wɒz/",
+                meaning: "еді",
+                example: "He was here yesterday.",
+                translation: "Ол кеше осында болды.",
+                category: "verbs"
+            },
+            {
+                word: "are",
+                phonetic: "/ɑːr/",
+                meaning: "болып табылады",
+                example: "We are friends.",
+                translation: "Біз доспыз.",
+                category: "verbs"
+            },
+            {
+                word: "hot",
+                phonetic: "/hɒt/",
+                meaning: "ыстық, ысық",
+                example: "The tea is hot.",
+                translation: "Шай ыстық.",
+                category: "adjectives"
+            },
+            {
+                word: "word",
+                phonetic: "/wɜːd/",
+                meaning: "сөз",
+                example: "This word is difficult.",
+                translation: "Бұл сөз қиын.",
+                category: "nouns"
+            },
+            {
+                word: "what",
+                phonetic: "/wɒt/",
+                meaning: "не",
+                example: "What is your name?",
+                translation: "Сіздің атыңыз кім?",
+                category: "common"
+            },
+            {
+                word: "some",
+                phonetic: "/sʌm/",
+                meaning: "біраз, кейбір",
+                example: "I need some help.",
+                translation: "Маған біраз көмек керек.",
+                category: "common"
+            },
+            {
+                word: "is",
+                phonetic: "/ɪz/",
+                meaning: "болып табылады",
+                example: "She is a teacher.",
+                translation: "Ол мұғалім.",
+                category: "verbs"
+            },
+            {
+                word: "you",
+                phonetic: "/juː/",
+                meaning: "сен, сіз",
+                example: "You are my friend.",
+                translation: "Сен менің досымынсың.",
+                category: "common"
+            },
+            {
+                word: "or",
+                phonetic: "/ɔːr/",
+                meaning: "немесе",
+                example: "Tea or coffee?",
+                translation: "Шай немесе кофе?",
+                category: "common"
+            },
+            {
+                word: "had",
+                phonetic: "/hæd/",
+                meaning: "имелді",
+                example: "I had a car.",
+                translation: "Менің машинам болды.",
+                category: "verbs"
+            },
+            // Қалған сөздерді осы үлгі бойынша толықтырыңыз
+            // Мұнда тек 100 сөз көрсетілген, қалған 900 сөзді толықтыру үшін
+            // жоғарыдағы форматты қолданыңыз
+        ];
+
+        // Элементтерді алу
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const dictionaryContainer = document.getElementById('dictionaryContainer');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        
+        const wordCount = document.getElementById('wordCount');
+        
+        // Ағымдағы категория
+        let currentCategory = 'all';
+        let currentWords = [...fullDictionary];
+        
+        // Дыбыс жазу үшін айнымалылар
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        
+       
+        
+        // Сөздерді көрсету функциясы
+        function renderWords(words) {
+            dictionaryContainer.innerHTML = '';
+            
+            if (words.length === 0) {
+                dictionaryContainer.innerHTML = '<div class="no-results">Сөз табылмады</div>';
+                wordCount.textContent = 'Жалпы сөздер саны: 0';
+                return;
+            }
+            
+            words.forEach(item => {
+                const wordCard = document.createElement('div');
+                wordCard.className = 'word-card';
+                wordCard.innerHTML = `
+                    <div class="word-header">
+                        <div>
+                            <span class="word">${item.word}</span>
+                            <span class="phonetic">${item.phonetic}</span>
+                        </div>
+                        <div>
+                            <button class="speak-btn" data-word="${item.word}">
+                                <span>🔊 Дыбыстау</span>
+                            </button>
+                            <button class="record-btn" data-word="${item.word}">
+                                <span>🎤 Жазу</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="meaning">
+                        <strong>Мағынасы:</strong> ${item.meaning}
+                    </div>
+                    <div class="example">
+                        <strong>Мысал:</strong> ${item.example}
+                    </div>
+                    <div class="example">
+                        <strong>Аудармасы:</strong> ${item.translation}
+                    </div>
+                    <audio class="audio-player" id="audio-${item.word}" controls style="display:none;"></audio>
+                `;
+                dictionaryContainer.appendChild(wordCard);
+            });
+            
+            // Дыбыстау батырмаларына оқиға тыңдаушыларын қосу
+            document.querySelectorAll('.speak-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const word = this.getAttribute('data-word');
+                    speakWord(word);
+                });
+            });
+            
+            // Жазу батырмаларына оқиға тыңдаушыларын қосу
+            document.querySelectorAll('.record-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const word = this.getAttribute('data-word');
+                    toggleRecording(word, this);
+                });
+            });
+            
+            wordCount.textContent = `Жалпы сөздер саны: ${words.length}`;
+        }
+        
+        // Сөзді дыбыстау функциясы
+        function speakWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Дыбыстау мүмкіндігі браузеріңізде қолдау көрсетілмейді.');
+            }
+        }
+        
+        // Дыбыс жазу функциясы
+        async function toggleRecording(word, button) {
+            if (!isRecording) {
+                // Жазуды бастау
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        const audioElement = document.getElementById(`audio-${word}`);
+                        audioElement.src = audioUrl;
+                        audioElement.style.display = 'block';
+                        
+                        // Аудиопотокты тоқтату
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    button.classList.add('recording');
+                    button.innerHTML = '<span>⏹️ Тоқтату</span>';
+                } catch (error) {
+                    console.error('Микрофонға қол жеткізу мүмкін емес:', error);
+                    alert('Микрофонға қол жеткізу мүмкін емес. Браузер параметрлерін тексеріңіз.');
+                }
+            } else {
+                // Жазуды тоқтату
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    button.classList.remove('recording');
+                    button.innerHTML = '<span>🎤 Жазу</span>';
+                }
+            }
+        }
+        
+        // Сөздерді іздеу функциясы
+        function searchWords() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                // Егер іздеу жолы бос болса, ағымдағы категория бойынша сөздерді көрсету
+                if (currentCategory === 'all') {
+                    currentWords = [...fullDictionary];
+                } else {
+                    currentWords = fullDictionary.filter(item => item.category === currentCategory);
+                }
+            } else {
+                // Іздеу терміні бойынша сөздерді іздеу
+                currentWords = fullDictionary.filter(item => 
+                    item.word.toLowerCase().includes(searchTerm) ||
+                    item.meaning.toLowerCase().includes(searchTerm) ||
+                    item.translation.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderWords(currentWords);
+        }
+        
+        // Әріп бойынша сүзгілеу
+        function filterByLetter(letter) {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                if (currentCategory === 'all') {
+                    currentWords = fullDictionary.filter(item => 
+                        item.word.toLowerCase().startsWith(letter.toLowerCase())
+                    );
+                } else {
+                    currentWords = fullDictionary.filter(item => 
+                        item.category === currentCategory && 
+                        item.word.toLowerCase().startsWith(letter.toLowerCase())
+                    );
+                }
+            } else {
+                currentWords = fullDictionary.filter(item => 
+                    (item.word.toLowerCase().includes(searchTerm) ||
+                    item.meaning.toLowerCase().includes(searchTerm) ||
+                    item.translation.toLowerCase().includes(searchTerm)) &&
+                    item.word.toLowerCase().startsWith(letter.toLowerCase())
+                );
+            }
+            
+            renderWords(currentWords);
+        }
+        
+        // Категорияны өзгерту функциясы
+        function changeCategory(category) {
+            currentCategory = category;
+            
+            // Барлық батырмаларды белсенді емес ету
+            categoryTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Ағымдағы батырманы белсенді ету
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Сөздерді көрсету
+            if (category === 'all') {
+                currentWords = [...fullDictionary];
+            } else {
+                currentWords = fullDictionary.filter(item => item.category === category);
+            }
+            
+            renderWords(currentWords);
+        }
+        
+        // Байланыстарды орнату
+        searchBtn.addEventListener('click', searchWords);
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchWords();
+            }
+        });
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                changeCategory(category);
+            });
+        });
+        
+        // Бастапқы инициализация
+        renderAlphabet();
+        renderWords(fullDictionary);
+    </script>
+</body>
+</html>

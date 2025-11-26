@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кәсіптер туралы ағылшын тілін үйрену</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .video-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .upload-btn {
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 0 auto;
+        }
+        
+        .upload-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--gray);
+        }
+        
+        .exercise-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .exercise-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .exercise {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .exercise:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .exercise h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .option.correct {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        
+        .option.incorrect {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .fill-blanks {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            margin: 0 5px;
+            padding: 5px 10px;
+            border-bottom: 2px dashed #ccc;
+            text-align: center;
+            position: relative;
+        }
+        
+        .blank input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .blank.correct {
+            border-bottom-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        
+        .blank.incorrect {
+            border-bottom-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .sortable-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .sortable-item {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            cursor: move;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sortable-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sortable-item::before {
+            content: "≡";
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        
+        .sortable-item.correct-order {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        
+        .true-false-options {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .true-false-btn {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .true-false-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .true-false-btn.selected.true {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .true-false-btn.selected.false {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .result.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+        
+        .result.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+        
+        .score-board {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .true-false-options {
+                flex-direction: column;
+            }
+            
+            .video-controls {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Кәсіптер туралы ағылшын тілін үйрену</h1>
+            <p class="subtitle">Әр түрлі кәсіптер және олардың сипаттамалары</p>
+        </header>
+        
+        <section class="video-section">
+            <div class="upload-section">
+                <h3>Бейне файлын жүктеу</h3>
+                <p>Төмендегі батырманы басып, кәсіптер туралы ағылшын тіліндегі бейнені жүктеңіз (MP4, WebM, OGG форматында)</p>
+                <input type="file" id="videoUpload" accept="video/*" style="display: none;">
+                <button class="upload-btn" id="uploadTrigger">Бейнені таңдау</button>
+                <div class="file-name" id="fileName">Файл таңдалмаған</div>
+            </div>
+            
+            <div class="video-container">
+                <video id="localVideo" controls>
+                    Браузеріңіз бейне тегін қолдамайды.
+                </video>
+            </div>
+            
+            <div class="video-controls">
+                <button class="btn" id="playPauseBtn">Ойнату/Тоқтату</button>
+                <button class="btn" id="restartBtn">Қайта ойнату</button>
+                <button class="btn" id="muteBtn">Дыбысын өшіру/қосу</button>
+            </div>
+            
+            <div class="video-info">
+                <h2>Бейне тақырыбы: Әр түрлі кәсіптер</h2>
+                <p>Бұл бейнені тыңдап, төмендегі барлық тапсырмаларды орындаңыз.</p>
+            </div>
+        </section>
+        
+        <div class="score-board">
+            <h2>Сіздің нәтижеңіз</h2>
+            <div class="score" id="scoreDisplay">0/4</div>
+            <p>Төмендегі тапсырмаларды орындап, тыңдау дағдыларыңызды тексеріңіз</p>
+        </div>
+        
+        <section class="exercise-section">
+            <h2>Тыңдау тапсырмалары</h2>
+            
+            <div class="exercise">
+                <h3>1. Дұрыс жауапты таңдау</h3>
+                <p>Бейнені тыңдап, төмендегі сұраққа дұрыс жауапты таңдаңыз:</p>
+                <p><strong>Бейнеде кім туралы: "Ол арнайы жабдық киеді, өрт сөндіреді және шынайы суперқаһарман?"</strong></p>
+                
+                <div class="options">
+                    <div class="option" data-correct="true">Өрт сөндіруші</div>
+                    <div class="option" data-correct="false">Дәрігер</div>
+                    <div class="option" data-correct="false">Мұғалім</div>
+                    <div class="option" data-correct="false">Бақшашы</div>
+                </div>
+                
+                <button class="btn check-answer">Жауапты тексеру</button>
+                <div class="result"></div>
+            </div>
+            
+            <div class="exercise">
+                <h3>2. Бос орынды толтыру</h3>
+                <p>Бейнені тыңдап, төмендегі сөйлемдердегі бос орындарды толтырыңыз:</p>
+                
+                <div class="fill-blanks">
+                    "Who loves helping people and making sure they're healthy? Yes! <span class="blank"><input type="text" id="blank1"></span>. Who helps us learn at school? Well done! <span class="blank"><input type="text" id="blank2"></span>."
+                </div>
+                
+                <button class="btn check-answer">Жауаптарды тексеру</button>
+                <div class="result"></div>
+            </div>
+            
+            <div class="exercise">
+                <h3>3. Ретімен қою</h3>
+                <p>Бейнеде айтылған кәсіптерді дұрыс ретімен орналастырыңыз (біріншіден соңғыға дейін):</p>
+                
+                <div class="sortable-list" id="sortableList">
+                    <div class="sortable-item" data-order="2">Doctor</div>
+                    <div class="sortable-item" data-order="1">Firefighter</div>
+                    <div class="sortable-item" data-order="4">Gardener</div>
+                    <div class="sortable-item" data-order="3">Teacher</div>
+                </div>
+                
+                <button class="btn check-answer">Ретті тексеру</button>
+                <div class="result"></div>
+            </div>
+            
+            <div class="exercise">
+                <h3>4. Шын / Жалған</h3>
+                <p>Бейнені тыңдап, төмендегі мәліметтердің шын ба, жалған ба екенін анықтаңыз:</p>
+                
+                <div class="true-false-options">
+                    <div class="true-false-btn true">ШЫН</div>
+                    <div class="true-false-btn false">ЖАЛҒАН</div>
+                </div>
+                
+                <p class="statement"><strong>Бейнеге сәйкес, бақшашы өсімдіктерге қамқорлық жасап, бақшаларды әдемі етеді.</strong></p>
+                
+                <button class="btn check-answer">Жауапты тексеру</button>
+                <div class="result"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Айнымалылар
+        let currentScore = 0;
+        const maxScore = 4;
+        let videoPlaying = false;
+        
+        // Элементтерді алу
+        const videoUpload = document.getElementById('videoUpload');
+        const uploadTrigger = document.getElementById('uploadTrigger');
+        const fileName = document.getElementById('fileName');
+        const localVideo = document.getElementById('localVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        
+        // Бейне жүктеу
+        uploadTrigger.addEventListener('click', () => {
+            videoUpload.click();
+        });
+        
+        videoUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+                const videoURL = URL.createObjectURL(file);
+                localVideo.src = videoURL;
+                
+                // Бейне жүктелгенде барлық тапсырмаларды қалпына келтіру
+                resetAllExercises();
+            }
+        });
+        
+        // Бейне басқару
+        playPauseBtn.addEventListener('click', () => {
+            if (localVideo.paused) {
+                localVideo.play();
+                playPauseBtn.textContent = 'Тоқтату';
+                videoPlaying = true;
+            } else {
+                localVideo.pause();
+                playPauseBtn.textContent = 'Ойнату';
+                videoPlaying = false;
+            }
+        });
+        
+        restartBtn.addEventListener('click', () => {
+            localVideo.currentTime = 0;
+            localVideo.play();
+            playPauseBtn.textContent = 'Тоқтату';
+            videoPlaying = true;
+        });
+        
+        muteBtn.addEventListener('click', () => {
+            localVideo.muted = !localVideo.muted;
+            muteBtn.textContent = localVideo.muted ? 'Дыбысын қосу' : 'Дыбысын өшіру';
+        });
+        
+        // Бейне аяқталғанда
+        localVideo.addEventListener('ended', () => {
+            playPauseBtn.textContent = 'Ойнату';
+            videoPlaying = false;
+        });
+        
+        // Нұсқаларды таңдау
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Барлық нұсқалардан таңдау белгісін алып тастау
+                this.parentElement.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+        
+        // Шын/Жалған таңдау
+        document.querySelectorAll('.true-false-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.true-false-btn').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+        
+        // Сұрыптау функциясы
+        const sortableList = document.getElementById('sortableList');
+        let draggedItem = null;
+
+        sortableList.querySelectorAll('.sortable-item').forEach(item => {
+            item.setAttribute('draggable', true);
+            
+            item.addEventListener('dragstart', function() {
+                draggedItem = this;
+                setTimeout(() => this.style.opacity = '0.5', 0);
+            });
+            
+            item.addEventListener('dragend', function() {
+                setTimeout(() => this.style.opacity = '1', 0);
+                draggedItem = null;
+            });
+            
+            item.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            item.addEventListener('dragenter', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#e9ecef';
+            });
+            
+            item.addEventListener('dragleave', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+            
+            item.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#f8f9fa';
+                if (this !== draggedItem) {
+                    const allItems = Array.from(sortableList.querySelectorAll('.sortable-item'));
+                    const thisIndex = allItems.indexOf(this);
+                    const draggedIndex = allItems.indexOf(draggedItem);
+                    
+                    if (draggedIndex < thisIndex) {
+                        this.parentNode.insertBefore(draggedItem, this.nextSibling);
+                    } else {
+                        this.parentNode.insertBefore(draggedItem, this);
+                    }
+                }
+            });
+        });
+        
+        // Жауаптарды тексеру
+        document.querySelectorAll('.check-answer').forEach(button => {
+            button.addEventListener('click', function() {
+                const exercise = this.parentElement;
+                const result = exercise.querySelector('.result');
+                
+                // Тапсырма түрін анықтау
+                if (exercise.querySelector('.options')) {
+                    // Көп нұсқалы тапсырма
+                    const selectedOption = exercise.querySelector('.option.selected');
+                    
+                    if (!selectedOption) {
+                        result.textContent = 'Бір нұсқаны таңдаңыз.';
+                        result.className = 'result error';
+                        return;
+                    }
+                    
+                    if (selectedOption.getAttribute('data-correct') === 'true') {
+                        selectedOption.classList.add('correct');
+                        result.textContent = 'Дұрыс жауап! Бейнеде айтылғандай, өрт сөндіруші арнайы жабдық киіп, өрт сөндіреді және шынайы суперқаһарман болып табылады.';
+                        result.className = 'result success';
+                        updateScore(1);
+                        this.disabled = true;
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        result.textContent = 'Қате жауап. Қайталап көріңіз.';
+                        result.className = 'result error';
+                        
+                        // Дұрыс жауапты көрсету
+                        exercise.querySelectorAll('.option').forEach(opt => {
+                            if (opt.getAttribute('data-correct') === 'true') {
+                                opt.classList.add('correct');
+                            }
+                        });
+                        this.disabled = true;
+                    }
+                } else if (exercise.querySelector('.fill-blanks')) {
+                    // Бос орынды толтыру тапсырмасы
+                    const blank1 = document.getElementById('blank1');
+                    const blank2 = document.getElementById('blank2');
+                    
+                    if (!blank1.value.trim() || !blank2.value.trim()) {
+                        result.textContent = 'Барлық бос орындарды толтырыңыз.';
+                        result.className = 'result error';
+                        return;
+                    }
+                    
+                    const blank1Correct = blank1.value.trim().toLowerCase() === 'doctor';
+                    const blank2Correct = blank2.value.trim().toLowerCase() === 'teacher';
+                    
+                    if (blank1Correct && blank2Correct) {
+                        blank1.parentElement.classList.add('correct');
+                        blank2.parentElement.classList.add('correct');
+                        result.textContent = 'Дұрыс жауап! Бейнеде айтылғандай, дәрігер адамдарға көмектесу және олардың денсаулығын қамтамасыз етуді жақсы көреді, ал мұғалім бізге мектепте үйретеді.';
+                        result.className = 'result success';
+                        updateScore(1);
+                        this.disabled = true;
+                    } else {
+                        if (!blank1Correct) blank1.parentElement.classList.add('incorrect');
+                        if (!blank2Correct) blank2.parentElement.classList.add('incorrect');
+                        result.textContent = 'Қате жауап. Қайталап көріңіз.';
+                        result.className = 'result error';
+                        this.disabled = true;
+                    }
+                } else if (exercise.querySelector('.sortable-list')) {
+                    // Реттеу тапсырмасы
+                    const items = Array.from(exercise.querySelectorAll('.sortable-item'));
+                    let correct = true;
+                    
+                    items.forEach((item, index) => {
+                        if (parseInt(item.getAttribute('data-order')) !== index + 1) {
+                            correct = false;
+                        }
+                    });
+                    
+                    if (correct) {
+                        items.forEach(item => {
+                            item.classList.add('correct-order');
+                        });
+                        result.textContent = 'Табысты! Сіз дұрыс реттедіңіз. Бейнеде кәсіптер келесі ретпен келтірілген: Өрт сөндіруші, Дәрігер, Мұғалім, Бақшашы.';
+                        result.className = 'result success';
+                        updateScore(1);
+                        this.disabled = true;
+                    } else {
+                        result.textContent = 'Қате реттедіңіз. Қайталап көріңіз.';
+                        result.className = 'result error';
+                        this.disabled = true;
+                    }
+                } else if (exercise.querySelector('.true-false-options')) {
+                    // Шын/Жалған тапсырмасы
+                    const selectedBtn = exercise.querySelector('.true-false-btn.selected');
+                    
+                    if (!selectedBtn) {
+                        result.textContent = 'Шын немесе Жалған нұсқасын таңдаңыз.';
+                        result.className = 'result error';
+                        return;
+                    }
+                    
+                    // Бұл жерде біз шын жауапты "true" деп есептейміз
+                    if (selectedBtn.classList.contains('true')) {
+                        selectedBtn.classList.add('selected');
+                        result.textContent = 'Дұрыс жауап! Бейнеде айтылғандай, бақшашы өсімдіктерге қамқорлық жасап, бақшаларды әдемі етеді.';
+                        result.className = 'result success';
+                        updateScore(1);
+                        this.disabled = true;
+                    } else {
+                        result.textContent = 'Қате жауап. Бейнеде айтылғандай, бақшашы өсімдіктерге қамқорлық жасап, бақшаларды әдемі етеді.';
+                        result.className = 'result error';
+                        this.disabled = true;
+                    }
+                }
+            });
+        });
+        
+        // Нәтижені жаңарту
+        function updateScore(points) {
+            currentScore += points;
+            scoreDisplay.textContent = `${currentScore}/${maxScore}`;
+        }
+        
+        // Барлық тапсырмаларды қалпына келтіру
+        function resetAllExercises() {
+            currentScore = 0;
+            scoreDisplay.textContent = "0/4";
+            
+            // Барлық тапсырмаларды қалпына келтіру
+            document.querySelectorAll('.check-answer').forEach(btn => {
+                btn.disabled = false;
+            });
+            
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.blank').forEach(blank => {
+                blank.classList.remove('correct', 'incorrect');
+                const input = blank.querySelector('input');
+                if (input) input.value = '';
+            });
+            
+            document.querySelectorAll('.sortable-item').forEach(item => {
+                item.classList.remove('correct-order');
+            });
+            
+            document.querySelectorAll('.true-false-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.result').forEach(result => {
+                result.className = 'result';
+                result.style.display = 'none';
+            });
+            
+            // Сұрыптау тізімін бастапқы ретіне қайтару
+            const items = Array.from(sortableList.querySelectorAll('.sortable-item'));
+            items.sort((a, b) => parseInt(a.getAttribute('data-order')) - parseInt(b.getAttribute('data-order')));
+            items.forEach(item => sortableList.appendChild(item));
+        }
+        
+        // Бастапқы инициализация
+        resetAllExercises();
+    </script>
+</body>
+</html>

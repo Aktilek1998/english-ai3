@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Парк элементтерін орналастыру</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f8f0;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            height: 80vh;
+        }
+
+        .left-panel {
+            width: 30%;
+            background-color: #e8f5e8;
+            border: 2px solid #2e7d32;
+            border-radius: 10px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .park-title {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .elements-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .park-element {
+            background-color: transparent;
+            border: none;
+            border-radius: 8px;
+            padding: 5px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .park-element:hover {
+            transform: scale(1.1);
+        }
+
+        .park-element:active {
+            cursor: grabbing;
+        }
+
+        .element-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .road-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .right-panel {
+            width: 70%;
+            background-color: #4caf50;
+            border: 3px dashed #2e7d32;
+            border-radius: 10px;
+            position: relative;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        /* Шөптің фоны */
+        .grass-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, #388e3c 25%, transparent 25%),
+                linear-gradient(-45deg, #388e3c 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #388e3c 75%),
+                linear-gradient(-45deg, transparent 75%, #388e3c 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            opacity: 0.3;
+        }
+
+        /* Орталық жолдар */
+        .center-roads {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .horizontal-road {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: 
+                linear-gradient(to right, 
+                    transparent 0%, 
+                    #8d6e63 10%, 
+                    #5d4037 20%, 
+                    #8d6e63 30%, 
+                    #5d4037 40%, 
+                    #8d6e63 50%, 
+                    #5d4037 60%, 
+                    #8d6e63 70%, 
+                    #5d4037 80%, 
+                    #8d6e63 90%, 
+                    transparent 100%);
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+
+        .vertical-road {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 40px;
+            height: 100%;
+            background: 
+                linear-gradient(to bottom, 
+                    transparent 0%, 
+                    #8d6e63 10%, 
+                    #5d4037 20%, 
+                    #8d6e63 30%, 
+                    #5d4037 40%, 
+                    #8d6e63 50%, 
+                    #5d4037 60%, 
+                    #8d6e63 70%, 
+                    #5d4037 80%, 
+                    #8d6e63 90%, 
+                    transparent 100%);
+            transform: translateX(-50%);
+            opacity: 0.8;
+        }
+
+        .road-intersection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background-color: #5d4037;
+            transform: translate(-50%, -50%);
+            border-radius: 4px;
+        }
+
+        .area-title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-weight: bold;
+            background-color: rgba(46, 125, 50, 0.8);
+            padding: 5px 15px;
+            border-radius: 20px;
+            z-index: 5;
+        }
+
+        .draggable {
+            position: absolute;
+            cursor: move;
+            background-color: transparent;
+            border: none;
+            border-radius: 8px;
+            padding: 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            z-index: 10;
+        }
+
+        .draggable:hover {
+            transform: scale(1.05);
+        }
+
+        .draggable-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .road-element {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            cursor: pointer;
+            display: none;
+            z-index: 20;
+        }
+
+        .draggable:hover .delete-btn {
+            display: block;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+        }
+
+        .controls {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .clear-all-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .clear-all-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .element-count {
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Сол жақ панель - Парк элементтері -->
+        <div class="left-panel">
+            <div class="park-title">Park elements</div>
+            <div class="elements-grid">
+                <!-- Ағаштар -->
+                <div class="park-element" draggable="true" data-type="ағаш" data-image="tree.png">
+                    <img src="tree.png" alt="Ағаш" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Скамейка -->
+                <div class="park-element" draggable="true" data-type="скамейка" data-image="bench.png">
+                    <img src="bench.png" alt="Скамейка" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Буфет/Кафе -->
+                <div class="park-element" draggable="true" data-type="буфет" data-image="cafe.png">
+                    <img src="cafe.png" alt="Буфет" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Шамдар -->
+                <div class="park-element" draggable="true" data-type="шамдар" data-image="lamp.png">
+                    <img src="lamp.png" alt="Шам" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Балалар -->
+                <div class="park-element" draggable="true" data-type="бала" data-image="boy.png">
+                    <img src="boy.png" alt="Бала" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="қыз" data-image="girl.png">
+                    <img src="girl.png" alt="Қыз" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Үлкен адамдар -->
+                <div class="park-element" draggable="true" data-type="ер адам" data-image="man.png">
+                    <img src="man.png" alt="Ер адам" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="әйел адам" data-image="women.png">
+                    <img src="women.png" alt="Әйел адам" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Велосипед -->
+                <div class="park-element" draggable="true" data-type="велосипед" data-image="byke.png">
+                    <img src="byke.png" alt="Велосипед" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Гүл клумбалары -->
+                <div class="park-element" draggable="true" data-type="гүл клумбасы" data-image="flowers.png">
+                    <img src="flowers.png" alt="Гүл клумбасы" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Атракцион -->
+                <div class="park-element" draggable="true" data-type="атракцион" data-image="atraction.png">
+                    <img src="atraction.png" alt="Атракцион" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Колесо обозрение -->
+                <div class="park-element" draggable="true" data-type="колесо обозрение" data-image="ring.png">
+                    <img src="ring.png" alt="Колесо обозрение" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <!-- Қосымша элементтер -->
+                <div class="park-element" draggable="true" data-type="шатыр" data-image="cabin.png">
+                    <img src="cabin.png" alt="Шатыр" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="кинотеатр" data-image="cinema.png">
+                    <img src="cinema.png" alt="Кинотеатр" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="ат" data-image="horse.png">
+                    <img src="horse.png" alt="Ат" class="element-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="көл" data-image="lake.png">
+                    <img src="lake.png" alt="Көл" class="element-image" onerror="this.style.display='none'">
+                </div>
+
+                <!-- Жолдар -->
+                <div class="park-element" draggable="true" data-type="көлденең жол" data-image="roadgor.png">
+                    <img src="roadgor.png" alt="Көлденең жол" class="road-image" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="park-element" draggable="true" data-type="тік жол" data-image="roadvert.png">
+                    <img src="roadvert.png" alt="Тік жол" class="road-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="clear-all-btn" onclick="clearAllElements()">Delete</button>
+                <div class="element-count" id="elementCount">Алаңдағы элементтер: 0</div>
+            </div>
+        </div>
+
+        <!-- Оң жақ панель - Жасыл алаң -->
+        <div class="right-panel" id="greenArea">
+            <!-- Шөптің фоны -->
+            <div class="grass-background"></div>
+            
+            <!-- Орталық жолдар -->
+            <div class="center-roads">
+                <div class="horizontal-road"></div>
+                <div class="vertical-road"></div>
+                <div class="road-intersection"></div>
+            </div>
+            
+            <div class="area-title">My ideal park</div>
+            <!-- Мұнда элементтер орналастырылады -->
+        </div>
+    </div>
+
+    <div class="instructions">
+        <strong>Instruction:</strong> 
+        <ul>
+            <li>Drag and drop the images into the green area with the mouse.</li>
+            <li>To delete an image, hover over it and click the ❌ button that appears.</li>
+            <li>To delete all images at once, use the "Delete" button.</li>
+        </ul>
+    </div>
+
+    <script>
+        let currentElement = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        // Элементтер санын жаңарту
+        function updateElementCount() {
+            const count = document.querySelectorAll('#greenArea .draggable').length;
+            document.getElementById('elementCount').textContent = `Park elements: ${count}`;
+        }
+
+        // Элементтерді сүйреу функциясы
+        function makeDraggable(element) {
+            element.addEventListener('mousedown', startDrag);
+        }
+
+        function startDrag(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                return; // Өшіру батырмасын басқанда сүйреу болмасын
+            }
+            
+            currentElement = e.target.closest('.draggable') || e.target;
+            const rect = currentElement.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function onDrag(e) {
+            if (!currentElement) return;
+            
+            const greenArea = document.getElementById('greenArea');
+            const areaRect = greenArea.getBoundingClientRect();
+            
+            let x = e.clientX - offsetX;
+            let y = e.clientY - offsetY;
+            
+            // Элемент алаңнан шықпауы үшін шектеу
+            const elementRect = currentElement.getBoundingClientRect();
+            const maxX = areaRect.right - areaRect.left - elementRect.width;
+            const maxY = areaRect.bottom - areaRect.top - elementRect.height;
+            
+            x = Math.max(0, Math.min(x, maxX));
+            y = Math.max(0, Math.min(y, maxY));
+            
+            currentElement.style.left = x + 'px';
+            currentElement.style.top = y + 'px';
+        }
+
+        function stopDrag() {
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', stopDrag);
+            currentElement = null;
+        }
+
+        // Элементті өшіру функциясы
+        function deleteElement(element) {
+            element.remove();
+            updateElementCount();
+        }
+
+        // Өшіру батырмасын қосу функциясы
+        function addDeleteButton(element) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = '❌';
+            deleteBtn.title = 'Өшіру';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteElement(element);
+            };
+            element.appendChild(deleteBtn);
+        }
+
+        // Жаңа элемент қосу функциясы
+        function createNewElement(type, imageSrc, x, y) {
+            const newElement = document.createElement('div');
+            newElement.className = 'draggable';
+            newElement.setAttribute('data-type', type);
+            
+            // Сурет қосу
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.alt = type;
+            
+            // Жол суреттеріне арнайы класс
+            if (type === 'көлденең жол' || type === 'тік жол') {
+                img.className = 'road-element';
+            } else {
+                img.className = 'draggable-image';
+            }
+            
+            img.onerror = function() {
+                this.style.display = 'none';
+            };
+            
+            newElement.appendChild(img);
+            newElement.style.left = x + 'px';
+            newElement.style.top = y + 'px';
+            
+            makeDraggable(newElement);
+            addDeleteButton(newElement);
+            document.getElementById('greenArea').appendChild(newElement);
+            
+            updateElementCount();
+            return newElement;
+        }
+
+        // Барлық элементтерді өшіру
+        function clearAllElements() {
+            const elements = document.querySelectorAll('#greenArea .draggable');
+            if (elements.length === 0) {
+                alert('Алаңда өшіретін элемент жоқ!');
+                return;
+            }
+            
+            if (confirm(`Алаңдағы ${elements.length} элементті өшіруді растайсыз ба?`)) {
+                elements.forEach(element => element.remove());
+                updateElementCount();
+            }
+        }
+
+        // Бастапқы элементтерге сүйреу функциясын қосу
+        document.querySelectorAll('.park-element').forEach(element => {
+            element.addEventListener('dragstart', (e) => {
+                const type = element.getAttribute('data-type');
+                const imageSrc = element.getAttribute('data-image');
+                
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    type: type,
+                    imageSrc: imageSrc
+                }));
+            });
+        });
+
+        // Алаңға тастау функциясы
+        document.getElementById('greenArea').addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        document.getElementById('greenArea').addEventListener('drop', (e) => {
+            e.preventDefault();
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left - 25;
+            const y = e.clientY - rect.top - 25;
+            
+            createNewElement(data.type, data.imageSrc, x, y);
+        });
+
+        // Бастапқыда элементтер санын көрсету
+        document.addEventListener('DOMContentLoaded', updateElementCount);
+    </script>
+</body>
+</html>
